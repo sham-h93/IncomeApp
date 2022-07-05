@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_down_up</item>
+        <item name="android:windowExitAnimation">@anim/popup_up_down</item>
+    </style>
+
+    <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="materialThemeOverlay">@style/myCustomThemeForNormalFab</item>
+        <item name="shapeAppearanceOverlay">@style/customNormalFAB</item>
+
+    </style>
+
+    <style name="customNormalFAB">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+
+    </style>
+
+    <style name="myCustomThemeForNormalFab" parent="">
+        <item name="colorSecondary">@android:color/holo_green_dark</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+    </style>
+
+    <style name="Theme.DoNotDim" parent="android:Theme">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="deleteItemDialogStyle"
+        parent="Theme.DoNotDim">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+</resources>

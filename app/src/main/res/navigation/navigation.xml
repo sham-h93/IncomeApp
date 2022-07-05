@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.app.incomeapp.ui.fragments.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/layout_main_fragment">
+        <action
+            android:id="@+id/action_mainFragment_to_addEditIncomeCost"
+            app:destination="@id/addEditIncomeCost">
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addEditIncomeCost"
+        android:name="com.app.incomeapp.ui.fragments.AddEditIncomeCost"
+        android:label="AddEditIncomeCost"
+        tools:layout="@layout/layout_add_view_income_cost">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_addEditIncomeCost_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.app.incomeapp.ui.fragments.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/layout_fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

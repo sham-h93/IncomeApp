@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#ABB4FF</color>
+    <color name="blue_light">#788BFF</color>
+    <color name="blue">#697EFE</color>
+    <color name="yellow">#FBC224</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow_color">#FBC224</color>
+    <color name="red_color">#F26363</color>
+    <color name="green_color">#25C69A</color>
+    <color name="light_grey_color">#D5D5D5</color>
+    <color name="text_input_grey_color">#fafafa</color>
+    <color name="grey_color">#686868</color>
+</resources>
