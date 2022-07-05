@@ -27,6 +27,8 @@ import com.app.incomeapp.R
 import com.app.incomeapp.adapters.MainAdapter
 import com.app.incomeapp.adapters.OnClick
 import com.app.incomeapp.databinding.LayoutMainFragmentBinding
+import com.app.incomeapp.ui.FragmentBackHandler
+import com.app.incomeapp.ui.MainActivity
 import com.app.incomeapp.utils.numberFormatter
 import com.app.incomeapp.utils.pieEntry
 import com.app.incomeapp.ui.viewmodels.MainFragmentViewModel
@@ -139,9 +141,29 @@ class MainFragment : Fragment() {
             it.findNavController().navigate(R.id.action_mainFragment_to_addEditIncomeCost)
         }
 
+        handleBackClick()
+
 
         return bindView.root
 
+    }
+
+
+
+    private fun handleBackClick() {
+        var lastClickInstance = 0L
+
+        (requireActivity() as MainActivity).setBackHandler(object : FragmentBackHandler {
+            override fun onBack(onFirstBackClick: () -> Unit, activityBackAction: () -> Unit) {
+                onFirstBackClick()
+                val currentClickTime = System.currentTimeMillis()
+
+                if (currentClickTime - lastClickInstance < 2000)
+                    activityBackAction()
+
+                lastClickInstance = currentClickTime
+            }
+        })
     }
 
 
@@ -185,18 +207,6 @@ class MainFragment : Fragment() {
     }
 
 
-    fun onBackPress(): Boolean {
-        var shouldExit = false
-
-
-        AlertDialog.Builder(requireContext()).setTitle("A").setOnCancelListener {
-            shouldExit = true
-        }
-            .show()
-        return shouldExit
-    }
-
-    fun shouldInterceptBackPress() = true
 
 }
 
