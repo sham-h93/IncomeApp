@@ -5,9 +5,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
-import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,9 +17,9 @@ import com.app.incomeapp.R
 import com.app.incomeapp.databinding.DeleteInputPopupBinding
 import com.app.incomeapp.databinding.LayoutAddViewIncomeCostBinding
 import com.app.incomeapp.ui.viewmodels.AddEditIncomeCostViewModel
-import com.app.incomeapp.utils.AppPopUp
 import com.app.incomeapp.utils.BlurUtils.blurImg
 import com.app.incomeapp.utils.BlurUtils.takeScreenshotOfView
+import com.app.incomeapp.utils.showCustomToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +29,13 @@ class AddEditIncomeCost : Fragment() {
     lateinit var deleteInputBind: DeleteInputPopupBinding
     val viewmodel by viewModels<AddEditIncomeCostViewModel>()
     private var itemId: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback {
+            popFragment()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +69,7 @@ class AddEditIncomeCost : Fragment() {
         )
 
         viewmodel.toastMessage.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+            this@AddEditIncomeCost.requireContext().showCustomToast(message)
         }
 
         viewmodel.popFragment.observe(viewLifecycleOwner) { boolean ->

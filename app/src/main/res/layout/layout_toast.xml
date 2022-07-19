@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/toast_background">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/toast_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundTint="@color/green_color"
+            app:tint="@color/white"
+            app:srcCompat="@drawable/ic_outline_error" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/toast_txt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/iran_yekan_reg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text_size"
+            android:textAlignment="center"
+            android:layout_marginEnd="4dp"
+            android:text="برای خروج دوباره ضربه بزنید" />
+
+    </LinearLayout>
+</layout>

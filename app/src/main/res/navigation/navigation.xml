@@ -6,16 +6,6 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.app.incomeapp.ui.fragments.MainFragment"
-        android:label="MainFragment"
-        tools:layout="@layout/layout_main_fragment">
-        <action
-            android:id="@+id/action_mainFragment_to_addEditIncomeCost"
-            app:destination="@id/addEditIncomeCost">
-        </action>
-    </fragment>
-    <fragment
         android:id="@+id/addEditIncomeCost"
         android:name="com.app.incomeapp.ui.fragments.AddEditIncomeCost"
         android:label="AddEditIncomeCost"
@@ -25,8 +15,7 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_addEditIncomeCost_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment" />
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -35,8 +24,15 @@
         tools:layout="@layout/layout_fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.app.incomeapp.ui.fragments.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/layout_main_fragment">
+        <action
+            android:id="@+id/action_mainFragment_to_addEditIncomeCost"
+            app:destination="@id/addEditIncomeCost" />
     </fragment>
 </navigation>

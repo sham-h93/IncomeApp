@@ -20,8 +20,4 @@ class DataBaseRepository @Inject constructor(
 
     fun getIncomeOrCost(isIncome: AmountType) = appDatabase.getDao().getAllIncomesOrCosts(isIncome)
 
-    //fun getTodayTotalIncomeOrCost(isIncome: AmountType, time: ) = appDatabase.getDao().getTodayIncomesOrCosts(isIncome, )
-
-
-
 }
