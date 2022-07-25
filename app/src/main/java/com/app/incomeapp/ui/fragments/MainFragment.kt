@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
@@ -22,14 +24,17 @@ import com.app.incomeapp.adapters.MainAdapter
 import com.app.incomeapp.adapters.OnClick
 import com.app.incomeapp.databinding.LayoutMainFragmentBinding
 import com.app.incomeapp.ui.viewmodels.MainFragmentViewModel
+import com.app.incomeapp.utils.LineEntryValCol
+import com.app.incomeapp.utils.PieEntryValCol
 import com.app.incomeapp.utils.numberFormatter
-import com.app.incomeapp.utils.pieEntry
 import com.app.incomeapp.utils.showCustomToast
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.MPPointF
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -37,14 +42,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
     lateinit var bindView: LayoutMainFragmentBinding
     private val viewModel: MainFragmentViewModel by viewModels()
-    lateinit var chart: PieChart
+    lateinit var pieChart: PieChart
+    lateinit var lineChart: LineChart
     private var finishActivity = false
-    var chartEntresList = mutableListOf(pieEntry(), pieEntry(), pieEntry())
+    var pieChartEntresList = mutableListOf(
+        PieEntryValCol(),
+        PieEntryValCol(),
+        PieEntryValCol()
+    )
+    var incomeLineChartEntresList = mutableListOf<LineEntryValCol>()
+    var costLineChartEntresList = mutableListOf<LineEntryValCol>()
+    var buyLineChartEntresList = mutableListOf<LineEntryValCol>()
+    var profitLineChartEntresList = mutableListOf<LineEntryValCol>()
+
+    val dataSets = mutableListOf<ILineDataSet>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +89,8 @@ class MainFragment : Fragment() {
             container,
             false
         )
-        chart = bindView.pieChart
+        pieChart = bindView.pieChart
+        lineChart = bindView.lineChart
 
         val adapter = MainAdapter(object : OnClick {
             override fun onItemClicked(id: Int) {
@@ -84,52 +102,131 @@ class MainFragment : Fragment() {
             }
         })
 
+
+        incomeLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(0f, 0f)
+            )
+        )
+        incomeLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(10f, 10f)
+            )
+        )
+        incomeLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(5f, 7f)
+            )
+        )
+
+        incomeLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(15f, 20f)
+            )
+        )
+
+        costLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(20f, 20f)
+            )
+        )
+        costLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(30f, 30f)
+            )
+        )
+
+        buyLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(40f, 50f)
+            )
+        )
+        buyLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(50f, 60f)
+            )
+        )
+
+        profitLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(10f, 30f)
+            )
+        )
+        profitLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(70f, 80f)
+            )
+        )
+        profitLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(90f, 100f)
+            )
+        )
+        profitLineChartEntresList.add(
+            LineEntryValCol(
+                Entry(100f, 50f)
+            )
+        )
+
+        initLineChart()
+
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             .apply { bindView.rv.layoutManager = this }
         DividerItemDecoration(requireContext(), layoutManager.orientation)
             .apply { bindView.rv.addItemDecoration(this) }
         bindView.rv.adapter = adapter
 
+        bindView.statusRg.setOnCheckedChangeListener { rg, i ->
+            if (bindView.today.isChecked) {
+                checkPeriodVisibility()
+            } else if (bindView.lastWeek.isChecked) {
+                checkPeriodVisibility()
+            } else {
+                bindView.periodBtn.visibility = VISIBLE
+                bindView.periodBtn.animate().alpha(1.0f).start()
+            }
+        }
+
         viewModel.allIncomeCosts.asLiveData().observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
         viewModel.currentJalaliTime.observe(viewLifecycleOwner) { dateString ->
-            bindView.calendarTv.text = dateString
+            //bindView.calendarTv.text = dateString
         }
         viewModel.todayTotalIncome.observe(viewLifecycleOwner) { todayTotalIncome ->
             val formattedNum = numberFormatter(todayTotalIncome)
             bindView.sellAmountTv.text = formattedNum
-            initChart()
+            initPieChart()
         }
         viewModel.todayProfit.observe(viewLifecycleOwner) { todayProfit ->
             if (todayProfit < 0) return@observe
-            chartEntresList[0] = pieEntry(
+            pieChartEntresList[0] = PieEntryValCol(
                 todayProfit.toFloat(),
                 ContextCompat.getColor(requireContext(), R.color.green_color)
             )
             val formattedNum = numberFormatter(todayProfit)
             bindView.profitAmountTv.text = formattedNum
-            initChart()
+            initPieChart()
         }
         viewModel.todayTotalBuy.observe(viewLifecycleOwner) { todayTotalBuy ->
             if (todayTotalBuy < 0) return@observe
-            chartEntresList[1] = pieEntry(
+            pieChartEntresList[1] = PieEntryValCol(
                 todayTotalBuy.toFloat(),
                 ContextCompat.getColor(requireContext(), R.color.yellow_color)
             )
             val formattedNum = numberFormatter(todayTotalBuy)
             bindView.buyAmountTv.text = formattedNum
-            initChart()
+            initPieChart()
         }
         viewModel.todayTotalCost.observe(viewLifecycleOwner) { todayTotalCost ->
             if (todayTotalCost < 0) return@observe
-            chartEntresList[2] = pieEntry(
+            pieChartEntresList[2] = PieEntryValCol(
                 todayTotalCost.toFloat(),
                 ContextCompat.getColor(requireContext(), R.color.red_color)
             )
             val formattedNum = numberFormatter(todayTotalCost)
             bindView.costAmountTv.text = formattedNum
-            initChart()
+            initPieChart()
         }
 
         bindView.add.setOnClickListener {
@@ -140,10 +237,18 @@ class MainFragment : Fragment() {
 
     }
 
+    private fun checkPeriodVisibility() {
+        if (bindView.periodBtn.visibility == VISIBLE) {
+            bindView.periodBtn.apply {
+                animate().alpha(0.0f).start()
+                visibility = INVISIBLE
+            }
 
+        }
+    }
 
-    private fun initChart() {
-        chart.apply {
+    private fun initPieChart() {
+        pieChart.apply {
             setUsePercentValues(true)
             description.isEnabled = false
             legend.isEnabled = false
@@ -152,14 +257,12 @@ class MainFragment : Fragment() {
             setCenterTextTypeface(ResourcesCompat.getFont(requireContext(), R.font.iran_yekan_bold))
             setExtraOffsets(0f, 0f, 0f, 0f)
         }
-        val entries = ArrayList<PieEntry>()
-        val chartColor = ArrayList<Int>()
+        val entries = mutableListOf<PieEntry>()
+        val chartColor = mutableListOf<Int>()
 
-        chartEntresList.forEach {
+        pieChartEntresList.forEach {
             entries.add(
-                PieEntry(
-                    it.entryValue
-                )
+                PieEntry(it.entryValue)
             )
             chartColor.add(it.entryColor)
         }
@@ -176,9 +279,84 @@ class MainFragment : Fragment() {
             setValueFormatter(PercentFormatter())
             setValueTextSize(14f)
             setValueTextColor(Color.WHITE)
-            chart.data = this
+            pieChart.data = this
         }
-        chart.highlightValues(null)
+        pieChart.highlightValues(null)
     }
+
+    private fun initLineChart() {
+
+        lineChart.apply {
+            setDrawGridBackground(false)
+            getDescription().setEnabled(false)
+            getAxisLeft().setEnabled(true)
+            getAxisRight().setEnabled(false)
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            getAxisRight().setDrawAxisLine(true)
+            getAxisRight().setDrawGridLines(true)
+            getXAxis().setDrawAxisLine(false)
+            getXAxis().setDrawGridLines(false)
+            setTouchEnabled(false)
+            setDragEnabled(false)
+            setScaleEnabled(false)
+            setPinchZoom(false)
+        }
+
+        setLineData(
+            incomeLineChartEntresList,
+            "Income",
+            ContextCompat.getColor(requireContext(), R.color.blue)
+        )
+        setLineData(
+            costLineChartEntresList, "Cost", ContextCompat.getColor(
+                requireContext(),
+                R.color.red_color
+            )
+        )
+        setLineData(
+            buyLineChartEntresList,
+            "Buy",
+            ContextCompat.getColor(requireContext(), R.color.yellow)
+        )
+        setLineData(
+            profitLineChartEntresList,
+            "Profit",
+            ContextCompat.getColor(requireContext(), R.color.green_color)
+        )
+
+
+        val profitData = LineData(dataSets)
+        lineChart.setData(profitData)
+
+        val legend: Legend = lineChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        legend.orientation = Legend.LegendOrientation.HORIZONTAL
+        legend.setDrawInside(false)
+
+    }
+
+    private fun setLineData(
+        entriesList: List<LineEntryValCol>,
+        dataSetLabel: String,
+        color: Int,
+    ) {
+        val entryList = mutableListOf<Entry>()
+        entriesList.forEach {
+            entryList.add(it.entryValues)
+            LineDataSet(entryList, dataSetLabel).apply {
+                lineWidth = 2.5f
+                circleRadius = 4f
+                setDrawFilled(true)
+                fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.gradeint)
+                fillAlpha = 35
+                mode = LineDataSet.Mode.CUBIC_BEZIER
+                this.color = color
+                setCircleColor(color)
+                dataSets.add(this)
+            }
+        }
+    }
+
 }
 

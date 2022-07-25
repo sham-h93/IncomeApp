@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#ABB4FF</color>
+    <color name="blue_light_stroke">#ABB4FF</color>
     <color name="blue_light">#788BFF</color>
     <color name="blue">#697EFE</color>
     <color name="yellow">#FBC224</color>

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.room.TypeConverter
 import com.app.incomeapp.R
 import com.app.incomeapp.databinding.LayoutToastBinding
+import com.github.mikephil.charting.data.Entry
 import com.google.android.material.textview.MaterialTextView
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -49,8 +50,12 @@ fun getToday(): String? {
 
 fun numberFormatter(number: Any): String? = DecimalFormat("#,###").format(number)
 
-data class pieEntry(
+data class PieEntryValCol(
     val entryValue: Float = 0f,
+    val entryColor: Int = 0
+)
+data class LineEntryValCol(
+    val entryValues: Entry = Entry(),
     val entryColor: Int = 0
 )
 
