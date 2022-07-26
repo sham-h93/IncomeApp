@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.incomeapp.R
 import com.app.incomeapp.adapters.MainAdapter
 import com.app.incomeapp.adapters.OnClick
+import com.app.incomeapp.adapters.SortSpinnerAdapter
+import com.app.incomeapp.adapters.TypeSpinnerAdapter
 import com.app.incomeapp.databinding.LayoutMainFragmentBinding
 import com.app.incomeapp.ui.viewmodels.MainFragmentViewModel
 import com.app.incomeapp.utils.LineEntryValCol
@@ -63,6 +66,9 @@ class MainFragment : Fragment() {
 
     val dataSets = mutableListOf<ILineDataSet>()
 
+    lateinit var sortSpinnerAdapter: SortSpinnerAdapter
+    lateinit var typeSpinnerAdapter: TypeSpinnerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback {
@@ -102,6 +108,27 @@ class MainFragment : Fragment() {
             }
         })
 
+        SortSpinnerAdapter(requireContext(), resources.getStringArray(R.array.sort_list).toList()).run {
+            bindView.sortSpinner.adapter = this
+        }
+        bindView.sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                // TODO: implement sotr of list
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        TypeSpinnerAdapter(requireContext(), resources.getStringArray(R.array.sort_type_list).toList()).run {
+            bindView.typeSpinner.adapter = this
+        }
+        bindView.typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                // TODO: implement type of list
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
 
         incomeLineChartEntresList.add(
             LineEntryValCol(
@@ -285,19 +312,22 @@ class MainFragment : Fragment() {
     }
 
     private fun initLineChart() {
-
         lineChart.apply {
+            animateY(1000)
             setDrawGridBackground(false)
-            getDescription().setEnabled(false)
-            getAxisLeft().setEnabled(true)
-            getAxisRight().setEnabled(false)
+            legend.isEnabled = false
+            description.isEnabled = false
+            axisLeft.isEnabled = false
+            axisRight.isEnabled = false
+            xAxis.isEnabled = true
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            getAxisRight().setDrawAxisLine(true)
-            getAxisRight().setDrawGridLines(true)
-            getXAxis().setDrawAxisLine(false)
-            getXAxis().setDrawGridLines(false)
+            axisLeft.axisLineColor = Color.GREEN
+            axisRight.setDrawAxisLine(false)
+            axisRight.setDrawGridLines(false)
+            xAxis.setDrawAxisLine(false)
+            xAxis.setDrawGridLines(false)
             setTouchEnabled(false)
-            setDragEnabled(false)
+            isDragEnabled = false
             setScaleEnabled(false)
             setPinchZoom(false)
         }
@@ -324,7 +354,6 @@ class MainFragment : Fragment() {
             ContextCompat.getColor(requireContext(), R.color.green_color)
         )
 
-
         val profitData = LineData(dataSets)
         lineChart.setData(profitData)
 
@@ -345,8 +374,8 @@ class MainFragment : Fragment() {
         entriesList.forEach {
             entryList.add(it.entryValues)
             LineDataSet(entryList, dataSetLabel).apply {
-                lineWidth = 2.5f
-                circleRadius = 4f
+                lineWidth = 2f
+                circleRadius = 2.5f
                 setDrawFilled(true)
                 fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.gradeint)
                 fillAlpha = 35
@@ -357,6 +386,5 @@ class MainFragment : Fragment() {
             }
         }
     }
-
 }
 

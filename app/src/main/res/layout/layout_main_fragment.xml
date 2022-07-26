@@ -54,9 +54,9 @@
             android:id="@+id/status_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,10 +71,10 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:visibility="invisible"
                 android:paddingHorizontal="8dp"
                 android:text="از 24 مهر تا 4 آبان"
                 android:textSize="12sp"
+                android:visibility="invisible"
                 app:backgroundTint="@color/yellow_color"
                 app:cornerRadius="56dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -143,9 +143,9 @@
             android:id="@+id/chart_card_view"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
@@ -156,9 +156,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/today_container"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/profit_amount_tv"
@@ -330,20 +330,80 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <LinearLayout
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center_vertical"
+            android:paddingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/chart_card_view"
+            app:layout_constraintStart_toStartOf="@+id/chart_card_view"
+            app:layout_constraintTop_toBottomOf="@+id/chart_card_view">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sort_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iran_yekan_reg"
+                android:text="مرتب سازی بر اساس: "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sort_spinner"
+                style="@style/Widget.AppCompat.Spinner.DropDown"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_toLeftOf="@id/sort_tv"
+                android:background="@drawable/spinner_rounded_box"
+                android:dropDownWidth="match_parent"
+                android:fontFamily="@font/iran_yekan_reg"
+                android:popupBackground="@drawable/spinner_rounded_box"
+                android:popupElevation="6dp"
+                android:spinnerMode="dropdown"
+                android:textSize="16sp"
+                tools:listitem="@layout/sort_spinner"  />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iran_yekan_reg"
+                android:text="نوع: "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/type_spinner"
+                style="@style/Widget.AppCompat.Spinner.DropDown"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_toLeftOf="@id/sort_tv"
+                android:background="@drawable/spinner_rounded_box"
+                android:dropDownWidth="match_parent"
+                android:fontFamily="@font/iran_yekan_reg"
+                android:popupBackground="@drawable/spinner_rounded_box"
+                android:popupElevation="6dp"
+                android:spinnerMode="dropdown"
+                android:textSize="16sp"
+                tools:listitem="@layout/sort_spinner" />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
             android:layoutDirection="rtl"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chart_card_view"
+            app:layout_constraintStart_toStartOf="@+id/parent"
+            app:layout_constraintTop_toBottomOf="@+id/parent"
             app:layout_constraintVertical_bias="0.0" />
 
 
@@ -352,9 +412,9 @@
             style="@style/ShapeAppearance.MaterialComponents.SmallComponent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_baseline_add"

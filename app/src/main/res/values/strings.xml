@@ -20,4 +20,31 @@
     <string name="deleted_successfully">با موفقیت حذف شد</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="date_asc">تاریخ - صعودی</string>
+    <string name="date_dsc">تاریخ - نزولی</string>
+    <string name="amount_asc">مبلغ - صعودی</string>
+    <string name="amount_dsc">مبلغ - نزولی</string>
+    <string name="alphabet_asc">الفبا - صعود</string>
+    <string name="alphabet_dsc">الفبا - نزولی</string>
+
+    <string-array name="sort_list">
+        <item>@string/date_asc</item>
+        <item>@string/date_dsc</item>
+        <item>@string/alphabet_asc</item>
+        <item>@string/amount_dsc</item>
+        <item>@string/alphabet_asc</item>
+        <item>@string/alphabet_dsc</item>
+    </string-array>
+
+    <string name="type_income">درآمد</string>
+    <string name="type_cost">هزینه</string>
+    <string name="type_buy">خرید</string>
+
+    <string-array name="sort_type_list">
+        <item>@string/type_income</item>
+        <item>@string/type_cost</item>
+        <item>@string/type_buy</item>
+    </string-array>
+
 </resources>

@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/gradeint.xml" value="0.1485" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/green_back.xml" value="0.142" />
+        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.1485" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/ic_baseline_keyboard_arrow_left_24.xml" value="0.1525" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/ic_check.xml" value="0.1525" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/ic_checked.xml" value="0.1" />
@@ -22,21 +23,25 @@
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/rb_right_btn.xml" value="0.147" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/rb_text_color_selector.xml" value="0.147" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/red_back.xml" value="0.142" />
+        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/spinner_rounded_box.xml" value="0.1485" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/status_rb_selected.xml" value="0.1485" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/status_rb_unselected.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/status_sb_selector.xml" value="0.1485" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/toast_background.xml" value="0.156" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/drawable/yellow_back.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/font/font.xml" value="0.26197916666666665" />
+        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/abanet_spinner.xml" value="0.17999144933732364" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/activity_main.xml" value="0.2234375" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/delete_input_popup.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/fragment_splash.xml" value="0.17999144933732364" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/layout_add_view_income_cost.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/layout_fragment_splash.xml" value="0.2" />
-        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/layout_main_fragment.xml" value="0.4" />
+        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/layout_main_fragment.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/layout_toast.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/main_fragment_rv_item.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/sort_spinner.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/toast.xml" value="0.176" />
+        <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/layout/type_spinner_dropdown.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/IncomeApp/app/src/main/res/menu/options_menu.xml" value="0.21927083333333333" />
         <entry key="..\:/SDK/platforms/android-31/data/res/layout/auto_complete_list.xml" value="0.17999144933732364" />
       </map>
