@@ -28,4 +28,8 @@ interface IncomeCostDao {
     @Query("SELECT * FROM income_cost_table WHERE amountType = :isIncome & time = :time")
     fun getTodayIncomesOrCosts(isIncome: AmountType, time: Long): Flow<List<IncomeCost>>
 
+
+    @Query("SELECT * FROM income_cost_table WHERE time>:startFrom AND time<:endTo ")
+    fun getRecordsFromTo(startFrom:Long,endTo:Long): Flow<List<IncomeCost>>
+
 }
